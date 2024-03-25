@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    // Dependencia para JUnit (opcional)
+    testImplementation 'junit:junit:4.12'
+}
+
+// Configuración de la tarea para ejecutar la clase Multiply
+task runMultiply(type: JavaExec) {
+    main = 'Multiply'
+    classpath = sourceSets.main.runtimeClasspath
+
+    // Captura de los argumentos de la línea de comandos
+    if (project.hasProperty("args")) {
+        args project.args.split()
+    }
+}
+
+// Configuración de la tarea para ejecutar las pruebas (opcional)
+test {
+    useJUnit()
+}

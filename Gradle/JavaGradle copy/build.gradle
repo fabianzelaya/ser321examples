@@ -1,0 +1,44 @@
+apply plugin: 'java'
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  // Dependency for JUnit (optional)
+  testImplementation 'junit:junit:4.12'
+}
+
+// Configuration of the task to execute the Fraction class
+task runFraction(type: JavaExec) {
+  main = 'Fraction'
+  classpath = sourceSets.main.runtimeClasspath
+
+  // Capture command line arguments
+  if (project.hasProperty("num") && project.hasProperty("denom")) {
+    args "-Pnum=${project.num}", "-Pdenom=${project.denom}"
+  } else if (project.hasProperty("num")) {
+    args "-Pnum=${project.num}"
+  }
+}
+
+// Configuration of the task to run tests (optional)
+test {
+  useJUnit()
+}
+
+
+// Try:
+// 1. Change Fraction.main so it accepts 2 arguments
+// 2. Create a new gradle tasks that accepts two arguments and 
+//    can be called as: gradle runFrac -Pdenom=4 -Pnum=3 or as gradle runFrac -Pnum=3 -Pdenom=4 , also make sure it can run with only 1 or no arguments
+
+// Example how you can add that libraries can be pulled from mavenCentral()
+// repositories {
+//   mavenCentral()
+// }
+
+// Setting dependencies, e.g. when you import JSON in your Java files
+// dependencies{
+//   implementation 'org.json:json:20171018'
+// }
